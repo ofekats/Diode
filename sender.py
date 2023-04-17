@@ -22,13 +22,14 @@ if __name__ == '__main__':
     # s.send(md5.encode())
     # sleep(1)
     print("sending the file...")
+    buffer_size = 4096
     with open(filename, 'rb') as f:
-        num = int(file_length/1024)+1
+        num = int(file_length/buffer_size)+1
         # print("file len: ", file_length)
         for i in tqdm(range(num)):
             # Read a chunk of data from the file
-            data = f.read(1024)
-            # sleep(1)
+            data = f.read(buffer_size)
+            sleep(0.5)
             # If there's no more data, break out of the loop
             if not data:
                 break

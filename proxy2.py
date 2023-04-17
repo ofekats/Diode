@@ -14,7 +14,7 @@ if __name__ == '__main__':
     # data for opening sockets
     addr = '0.0.0.0'  # just till he will get the first chunk of the image
     # buffer_size = 17000
-    buffer_size = 4000
+    buffer_size = 6000
     # Create a UDP socket and bind it to the specified IP address and port
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)  # ipv4, udp socket
     sock.bind((PROX2_IP, PROXY2_PORT))
@@ -23,7 +23,7 @@ if __name__ == '__main__':
     s.bind(('0.0.0.0', PROXY2_PORT_TCP))
     s.listen(2)
     sock.setblocking(False)  # socket not blocking for timeout
-    time.sleep(15)  # wait for app to get path from server
+    # time.sleep(15)  # wait for app to get path from server
     # Open a file to write the received chunks to
     firstime = True
     while 1:
@@ -106,8 +106,8 @@ if __name__ == '__main__':
             # print("file len: ", file_length)
             while 1:
                 # Read a chunk of data from the file
-                data = f.read(1024)
-                time.sleep(1)
+                data = f.read(4096)
+                time.sleep(0.5)
                 # If there's no more data, break out of the loop
                 if not data:
                     break

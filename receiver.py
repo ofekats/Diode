@@ -22,11 +22,11 @@ if __name__ == '__main__':
             i += 1
             print("size =", file_len)
             # Receive a chunk of data from the socket
-            data = s.recv(1024)
+            data = s.recv(4096)
             # If there's no more data, break out of the loop
             if not data:
                 break
-            file_len -= 1024
+            file_len -= 4096
             f.write(data)
     print("receiver got all the file!")
     with open("receiver", 'rb') as f:

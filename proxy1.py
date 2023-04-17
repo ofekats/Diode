@@ -26,7 +26,7 @@ if __name__ == '__main__':
             with open("proxy1", 'wb') as f:
                 while True:
                     # Receive a chunk of data from the socket
-                    data = conn.recv(1024)
+                    data = conn.recv(4096)
 
                     # If there's no more data, break out of the loop
                     if not data:
@@ -46,7 +46,7 @@ if __name__ == '__main__':
         #rudp
         # Define the IP address and port number of the receiver
         # buffer_size = 16024  # the min window sent
-        buffer_size = 2024  # the min window sent
+        buffer_size = 4096  # the min window sent
         # Open the image file in binary mode
         with open("proxy1", "rb") as f:
             # Create a UDP socket
