@@ -9,7 +9,6 @@ RECEIVER_IP = "10.9.0.5"
 RECEIVER_PORT = 22222
 if __name__ == '__main__':
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    # time.sleep(30)
     # Connect to the server
     s.connect((PROX2_IP, PROXY2_PORT_TCP))
     print("receiver ready to get data")
@@ -18,14 +17,8 @@ if __name__ == '__main__':
     file_len = int(size)
     buffer_size = 4096
     with open("receiver", 'wb') as f:
-        num = int(file_len / buffer_size)
-        # print("file len: ", file_length)
+        num = int(file_len / buffer_size)+1
         for i in tqdm(range(num)):
-        # i = 0
-        # while file_len > 0:
-        #     print("in while: ", i)
-        #     i += 1
-        #     print("size =", file_len)
             # Receive a chunk of data from the socket
             data = s.recv(buffer_size)
             # If there's no more data, break out of the loop

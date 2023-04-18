@@ -8,24 +8,18 @@ PROXY1_PORT = 12345
 SENDER_IP = "10.9.0.2"
 if __name__ == '__main__':
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
     # Connect to the server
     s.connect((PROX1_IP, PROXY1_PORT))
-
-    # filename = "file.txt"
-    filename = "amitdvir2.jpg"
+    filename = "sunflower.jpeg"
     with open(filename, 'rb') as f:
         data = f.read()
         file_length = len(data)
         md5 = hashlib.md5(data).hexdigest()
     print("file MD5: ", md5)
-    # s.send(md5.encode())
-    # sleep(1)
     print("sending the file...")
     buffer_size = 4096
     with open(filename, 'rb') as f:
         num = int(file_length/buffer_size)+1
-        # print("file len: ", file_length)
         for i in tqdm(range(num)):
             # Read a chunk of data from the file
             data = f.read(buffer_size)
@@ -35,7 +29,3 @@ if __name__ == '__main__':
                 break
             # Send the chunk of data over the socket
             s.send(data)
-
-
-
-
