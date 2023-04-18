@@ -46,7 +46,7 @@ if __name__ == '__main__':
         #rudp
         # Define the IP address and port number of the receiver
         # buffer_size = 16024  # the min window sent
-        buffer_size = 4096  # the min window sent
+        buffer_size = 8192  # the min window sent
         # Open the image file in binary mode
         with open("proxy1", "rb") as f:
             # Create a UDP socket
@@ -60,11 +60,14 @@ if __name__ == '__main__':
             # Read the image file in chunks and send them over UDP
             seq_num = 0
             seq_ack = -1
+            notlost = True
             while True:
-                if seq_num == (seq_ack + 1):  # if we got ack send new data
+                if seq_num == (seq_ack + 1) and notlost:  # if we got ack send new data
                     chunk = f.read(buffer_size)
                     # print("data: ", chunk)
-                    print("send new packet")
+                    # print("send new packet")
+                    # print("num seq:", seq_num)
+                    # print("ack seq:", seq_ack)
                     if not chunk:
                         # End of file reached
                         print("no more data to send")
@@ -85,7 +88,7 @@ if __name__ == '__main__':
                     except socket.error:
                         # No data available to receive
                         pass
-                    time.sleep(1)  # timeout
+                    time.sleep(0.5)  # timeout
                     num -= 1
                     if data:
                         seq_ack = (data.decode("utf-8")).split("ack:")[1].split("'")[0]
@@ -94,8 +97,11 @@ if __name__ == '__main__':
                         if seq_num == seq_ack:
                             print("got ack!")
                             seq_num += 1
+                            notlost = True
                         elif seq_num != seq_ack:
-                            print("\ntimeout!!!")
+                            print("\nlost packet!!!")
+                            notlost = False
+                            # seq_num -= 1
                         break
 
                 if not data:

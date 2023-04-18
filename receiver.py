@@ -1,6 +1,7 @@
 import socket
 import hashlib
 import time
+from tqdm import tqdm
 
 PROX2_IP = "10.9.0.4"
 PROXY2_PORT_TCP = 33333
@@ -13,20 +14,24 @@ if __name__ == '__main__':
     s.connect((PROX2_IP, PROXY2_PORT_TCP))
     print("receiver ready to get data")
     size = s.recv(80)
-    size = size.decode("UTF-8");
+    size = size.decode("UTF-8")
     file_len = int(size)
+    buffer_size = 4096
     with open("receiver", 'wb') as f:
-        i = 0
-        while file_len > 0:
-            print("in while: ", i)
-            i += 1
-            print("size =", file_len)
+        num = int(file_len / buffer_size)
+        # print("file len: ", file_length)
+        for i in tqdm(range(num)):
+        # i = 0
+        # while file_len > 0:
+        #     print("in while: ", i)
+        #     i += 1
+        #     print("size =", file_len)
             # Receive a chunk of data from the socket
-            data = s.recv(4096)
+            data = s.recv(buffer_size)
             # If there's no more data, break out of the loop
             if not data:
                 break
-            file_len -= 4096
+            file_len -= buffer_size
             f.write(data)
     print("receiver got all the file!")
     with open("receiver", 'rb') as f:

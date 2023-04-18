@@ -14,7 +14,7 @@ if __name__ == '__main__':
     # data for opening sockets
     addr = '0.0.0.0'  # just till he will get the first chunk of the image
     # buffer_size = 17000
-    buffer_size = 6000
+    buffer_size = 10000
     # Create a UDP socket and bind it to the specified IP address and port
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)  # ipv4, udp socket
     sock.bind((PROX2_IP, PROXY2_PORT))
@@ -49,7 +49,7 @@ if __name__ == '__main__':
                         # print("didn't received data")
                         # no data available to receive
                         pass
-                    time.sleep(1)  # timeout
+                    time.sleep(0.5)  # timeout
                     num -= 1
                     if data:
                         seq = (str(data)).split("seq!!!!!")[0]

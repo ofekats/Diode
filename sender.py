@@ -29,7 +29,7 @@ if __name__ == '__main__':
         for i in tqdm(range(num)):
             # Read a chunk of data from the file
             data = f.read(buffer_size)
-            sleep(0.5)
+            sleep(0.2)
             # If there's no more data, break out of the loop
             if not data:
                 break
